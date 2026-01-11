@@ -1,0 +1,104 @@
+Start:
+    read
+    store N
+
+    load ZERO
+    store i
+
+    call ReadAndPush
+
+    load ZERO
+    store count
+
+    call FrequencyPrint
+
+    stop
+
+; =====================================================
+; Read N values and push onto stack
+; =====================================================
+ReadAndPush:
+RLoop:
+    load i
+    subtract N
+    jmpz RDone
+
+    read
+    store CUR
+    push CUR
+
+    load i
+    add ONE
+    store i
+
+    jump RLoop
+RDone:
+    return
+
+; =====================================================
+; Pop stack and print value + frequency
+; =====================================================
+FrequencyPrint:
+    pop PREV
+    load ONE
+    store FREQ
+
+    load count
+    add ONE
+    store count
+
+FreqLoop:
+    load count
+    subtract N
+    jmpz PrintLast
+
+    pop CUR
+
+    load CUR
+    subtract PREV
+    jmpz SameValue
+
+    ; print previous value and frequency
+    load PREV
+    write
+    load FREQ
+    write
+
+    ; reset for new value
+    load CUR
+    store PREV
+    load ONE
+    store FREQ
+
+    load count
+    add ONE
+    store count
+    jump FreqLoop
+
+SameValue:
+    load FREQ
+    add ONE
+    store FREQ
+
+    load count
+    add ONE
+    store count
+    jump FreqLoop
+
+PrintLast:
+    load PREV
+    write
+    load FREQ
+    write
+    return
+; =====================================================
+; DATA SECTION
+; =====================================================
+ZERO: .data 2 0
+ONE:  .data 2 1
+N:     .data 2 0
+i:     .data 2 0
+count: .data 2 0
+CUR:   .data 2 0
+PREV:  .data 2 0
+FREQ:  .data 2 0
