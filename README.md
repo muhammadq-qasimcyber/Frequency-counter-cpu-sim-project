@@ -112,8 +112,6 @@ Data Structure: Stack
 
 Muhammad Qasim Azhar
 
-Noman Khan
-
 🚀 Future Improvements
 
 Implement second stack for (value, frequency) pairs
